@@ -9,42 +9,36 @@ namespace StudentDataAccess
 
         public static void UpdateStudent(int studentId, string studentFname, string studentLname)
         {
-            try
-            {
                 string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True";
                 SqlConnection conn = new SqlConnection(connStr);
                 conn.Open();
                 string sql = "UPDATE STUDENTS SET FirstName='"+@studentFname+"',LastName='"+@studentLname+"' WHERE ID='"+@studentId+"' ";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@studentFname", studentFname);
+            cmd.Parameters.AddWithValue("@studentLname", studentLname);
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+            cmd.ExecuteNonQuery();
                 conn.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred while creating the student: " + ex.Message);
-            }
+            
+            
         }
         public static void DeleteStudent(int id)
         {
-            try
-            {
+            
                 string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True";
                 SqlConnection conn = new SqlConnection(connStr);
                 conn.Open();
                 string sql = "DELETE FROM students WHERE ID='"+ @id + "'";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
                 conn.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred while creating the student: " + ex.Message);
-            }
+            
+           
         }
         public static void CreateStudent<T>(T obj)
         {
-            try
-            {
+            
                 string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True";
                 SqlConnection conn = new SqlConnection(connStr);
                 conn.Open();
@@ -52,19 +46,16 @@ namespace StudentDataAccess
                 string lastName = obj.GetType().GetProperty("LastName").GetValue(obj, null).ToString();
                 string sql = "INSERT INTO STUDENTS(FirstName,LastName) VALUES('" + @firstName + "','" + @lastName + "')";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@firstName", firstName);
+            cmd.Parameters.AddWithValue("@lastName", lastName);
+            cmd.ExecuteNonQuery();
                 conn.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred while creating the student: " + ex.Message);
-            }
+            
         }
         public static List<Student> GetAllStudents()
         {
             List<Student> students = new List<Student>();
-            try
-            {
+           
                 string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True";
                
                 SqlConnection conn = new SqlConnection(connStr);
@@ -80,11 +71,7 @@ namespace StudentDataAccess
                 reader.Close();
                 conn.Close();
                 return students;
-            }
-            catch
-            {
-                return students;
-            }
+           
         }
     }
 }
