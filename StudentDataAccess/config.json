@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True;"
+    
+  }
+}
