@@ -63,7 +63,7 @@ namespace StudentUI
 
                         break;
                     case 3:
-
+                        getStudents();
                         Console.WriteLine("Enter ID to update student details:");
                         int uid = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter First Name:");
@@ -71,8 +71,11 @@ namespace StudentUI
                         Console.WriteLine("Enter Last Name:");
                         string lastNameU = Console.ReadLine();
 
+                        Student s2 = new Student();
+                        s2.FirstName = firstNameU;
+                        s2.LastName = lastNameU;
 
-                        StudentBusineeLogic.UpdateStudent(uid, firstNameU, lastNameU);
+                        StudentBusineeLogic.UpdateStudent(uid,s2);
 
                         getStudents();
                       
