@@ -5,11 +5,15 @@ namespace StudentUI
 {
     internal class Program
     {
+       
+
         static void Main()
         {
+            IStudentBusinessLogic _IStudentBusinessLogic = new StudentBusineeLogic();
+            
             void getStudents()
             {
-                List<Student> students = StudentBusineeLogic.GetAllStudents();
+                List<Student> students = _IStudentBusinessLogic.GetAllStudents();
                 foreach (Student student in students)
                 {
                     Console.WriteLine($"{student.FirstName} {student.LastName} ({student.ID})");
@@ -45,7 +49,7 @@ namespace StudentUI
                         s1.FirstName = FirstName;
                         s1.LastName = LastName;
 
-                        StudentBusineeLogic.AddStudent(s1);
+                        _IStudentBusinessLogic.AddStudent(s1);
 
                         getStudents();
                       
@@ -57,7 +61,7 @@ namespace StudentUI
                         Console.WriteLine("Enter ID to delete:");
                         int takenID = int.Parse(Console.ReadLine());
 
-                        StudentBusineeLogic.DeleteStudent(takenID);
+                        _IStudentBusinessLogic.DeleteStudent(takenID);
                         getStudents();
                        
 
@@ -75,7 +79,7 @@ namespace StudentUI
                         s2.FirstName = firstNameU;
                         s2.LastName = lastNameU;
 
-                        StudentBusineeLogic.UpdateStudent(uid,s2);
+                        _IStudentBusinessLogic.UpdateStudent(uid,s2);
 
                         getStudents();
                       

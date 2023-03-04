@@ -1,16 +1,26 @@
 ﻿using StudentDataAccess;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 namespace StudentBusinessLogic
 {
-    public static class StudentBusineeLogic
+    public class StudentBusineeLogic:IStudentBusinessLogic
     {
+        private static readonly StudentDataAccess.IStudentDataAccess studentAccess;
+        static StudentBusineeLogic()
+        {
+            studentAccess = new StudentDataAccess.StudentDataAccess();
+        }
+       
         public static List<Student> GetAllStudents()
         {
+            
             List<Student> students = new List<Student>();
 
             try
             {
-                students = StudentDataAccess.StudentDataAccess.GetAllRecords<Student>();
+                students = studentAccess.GetAllRecords<Student>();
             }
             catch (SqlException ex)
             {
@@ -34,7 +44,7 @@ namespace StudentBusinessLogic
 
             try
             {
-                StudentDataAccess.StudentDataAccess.CreateRecord(student);
+                studentAccess.CreateRecord(student);
             }
             catch (Exception ex)
             {
@@ -56,7 +66,7 @@ namespace StudentBusinessLogic
 
             try
             {
-                List<Student> students = StudentDataAccess.StudentDataAccess.GetAllRecords<Student>();
+                List<Student> students = studentAccess.GetAllRecords<Student>();
                 Student studentToDelete = students.FirstOrDefault(s => s.ID == id);
                 if (studentToDelete == null)
                 {
@@ -64,7 +74,7 @@ namespace StudentBusinessLogic
                     return;
                 }
 
-                StudentDataAccess.StudentDataAccess.DeleteRecord<Student>(id);
+                studentAccess.DeleteRecord<Student>(id);
             }
             catch (Exception ex)
             {
@@ -85,7 +95,7 @@ namespace StudentBusinessLogic
             try
             {
                 // Check if the student exists before updating
-                var existingStudent = StudentDataAccess.StudentDataAccess.GetRecordById<Student>(id);
+                var existingStudent = studentAccess.GetRecordById<Student>(id);
                 if (existingStudent == null)
                 {
                     Console.WriteLine($"Student with ID {id} does not exist.");
@@ -96,7 +106,7 @@ namespace StudentBusinessLogic
                     Console.WriteLine("First and last name cannot be empty.");
                 }
 
-                else { StudentDataAccess.StudentDataAccess.UpdateRecord(id, student); }
+                else { studentAccess.UpdateRecord(id, student); }
             }
             catch (Exception ex)
             {

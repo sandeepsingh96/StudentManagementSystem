@@ -7,10 +7,10 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 namespace StudentDataAccess
 {
-    public static class StudentDataAccess
+    public class StudentDataAccess:IStudentDataAccess
     {
 
-        private static string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True;";
+        private string connStr = "Data Source=JOHALSANDEEP\\SQLEXPRESS;Initial Catalog=MyDB;Integrated Security=True;";
         //static StudentDataAccess()
         //{
         //    var builder = new ConfigurationBuilder()
@@ -21,7 +21,7 @@ namespace StudentDataAccess
         //    connStr = configuration.GetConnectionString("DefaultConnection");
         //}
 
-        public static void UpdateRecord<T>(int id, T obj) where T : class
+        public void UpdateRecord<T>(int id, T obj) where T : class
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -38,7 +38,7 @@ namespace StudentDataAccess
                 cmd.ExecuteNonQuery();
             }
         }
-        public static void DeleteRecord<T>(int id)
+        public void DeleteRecord<T>(int id)
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -50,7 +50,7 @@ namespace StudentDataAccess
             }
         }
 
-        public static void CreateRecord<T>(T obj) where T : class
+        public void CreateRecord<T>(T obj) where T : class
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -67,7 +67,7 @@ namespace StudentDataAccess
                 cmd.ExecuteNonQuery();
             }
         }
-        public static List<T> GetAllRecords<T>() where T : new()
+        public List<T> GetAllRecords<T>() where T : new()
         {
             List<T> records = new List<T>();
 
@@ -95,7 +95,7 @@ namespace StudentDataAccess
 
             return records;
         }
-         public static T GetRecordById<T>(int id) where T : new()
+         public T GetRecordById<T>(int id) where T : new()
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
